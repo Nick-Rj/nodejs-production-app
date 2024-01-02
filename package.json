@@ -1,0 +1,16 @@
+{
+  "name": "backend-app-nodejs",
+  "version": "1.0.0",
+  "description": "A video backend app for production",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backend",
+    "node",
+    "video-app"
+  ],
+  "author": "",
+  "license": "ISC"
+}
