@@ -1,9 +1,23 @@
 // require("dotenv").config({ path: "../env" });
 import connectDB from "./db/index.js";
 import dotenv from "dotenv";
+import { app } from "./app.js";
 
 dotenv.config({ path: "../.env" });
-connectDB();
+
+//Promise Chaining
+connectDB()
+  .then(() => {
+    app.on("error", (error) => {
+      console.log("Server failed", error);
+    });
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`Server is up and running at ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("MongoDB connection failed!!!", error);
+  });
 
 // import mongoose from "mongoose";
 // import { DB_NAME } from "./constants";
