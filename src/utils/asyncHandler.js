@@ -1,7 +1,7 @@
 // A wrapper function for handling all the async calls.
 // Using promises
 const asyncHandler = (requestHandler) => {
-  (req, res, next) => {
+  return (req, res, next) => {
     Promise.resolve(requestHandler(req, res, next))
       .catch((error) => next(error))
       .finally(() => {
@@ -9,6 +9,8 @@ const asyncHandler = (requestHandler) => {
       });
   };
 };
+
+export { asyncHandler };
 
 // Using try...catch
 /* const asyncHandler = (cb) => async (req, res, next) => {
