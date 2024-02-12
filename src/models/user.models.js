@@ -52,10 +52,10 @@ const userSchema = new Schema(
 );
 
 // For encrypting password before saving.
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   // Hashing the password with number of hash rounds and storing it in the password field
-  this.password = bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
