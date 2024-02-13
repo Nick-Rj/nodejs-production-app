@@ -31,7 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required!");
   }
 
-  const existingUser = User.findOne({
+  const existingUser = await User.findOne({
     // Checking for multiple fields
     $or: [{ username }, { email }],
   });
@@ -45,7 +45,25 @@ const registerUser = asyncHandler(async (req, res) => {
   // There are multiple properties provided by the file fields.
   // TODO: log req.files and observe the data.
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  console.log("All files", req.files, Array.isArray(req.files));
+
+  // let coverImageLocalPath;
+  // if (
+  //   req.files &&
+  //   Array.isArray(req.files) &&
+  //   req.files.coverImage.length > 0
+  // ) {
+  //   coverImageLocalPath = req.files.coverImage[0].path;
+  // }
+
+  const coverImageLocalPath =
+    req.files &&
+    req.files.coverImage &&
+    Array.isArray(req.files?.coverImage) &&
+    req.files.coverImage.length > 0
+      ? req.files.coverImage[0].path
+      : "";
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required!");
